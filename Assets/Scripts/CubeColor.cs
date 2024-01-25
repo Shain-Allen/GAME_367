@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -23,7 +22,8 @@ public class CubeColor : MonoBehaviour, IShootable
         _renderer.material.color = _shotColor;
         StartCoroutine(ResetColor());
     }
-
+    
+    //resets the color of the object back starter color
     private IEnumerator ResetColor()
     {
         yield return new WaitForSeconds(_resetTimer);
