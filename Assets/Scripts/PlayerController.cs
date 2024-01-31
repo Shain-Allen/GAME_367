@@ -7,6 +7,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _cam;
     
     [SerializeField] private float _movementSpeed = 5f;
+    [SerializeField] private float _maxJumpHeight = 1.0f;
+    [SerializeField] private float _maxJumpTime = 0.5f;
+    [SerializeField] private float minVerticalAngle = -90f;
+    [SerializeField] private float maxVerticalAngle = 90f;
+    
     private Vector3 _movementInput;
 
     [SerializeField] private float _shootDistance = 5f;
@@ -14,14 +19,12 @@ public class PlayerController : MonoBehaviour
     // gravity variables
     [SerializeField] private float _gravity = -9.8f;
     [SerializeField] private float _groundedGravity = -0.05f;
+
+    private float rotY = 0;
     
     // Jumping Variables
-    public float InitialJumpVelocity { get; private set; }
-    [SerializeField] private float _maxJumpHeight = 1.0f;
-    [SerializeField] private float _maxJumpTime = 0.5f;
+    private float InitialJumpVelocity { get; set; }
     public bool IsJumping = false;
-    
-    
     
     private void Awake()
     {
@@ -92,12 +95,15 @@ public class PlayerController : MonoBehaviour
     {
         //Get mouse input
         Vector2 mouseInput = new Vector2(Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y"));
+
+        rotY += mouseInput.y;
+        rotY = Mathf.Clamp(rotY, minVerticalAngle, maxVerticalAngle);
         
         //rotate Player body for left right looking
         transform.Rotate(Vector3.up ,mouseInput.x);
         
         //rotate camera for up/down looking
-        _cam.transform.Rotate(Vector3.right, mouseInput.y);
+        _cam.transform.localRotation = Quaternion.Euler(rotY, 0f, 0f);
     }
     
     private void HandleRaycast()
