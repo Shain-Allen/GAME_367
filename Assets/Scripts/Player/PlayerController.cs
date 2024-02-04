@@ -56,7 +56,8 @@ public class PlayerController : MonoBehaviour
         HandleJump();
 
         if(!_playerGun) return;
-        _playerGun.HandleRaycast();
+        _playerGun.Shoot();
+        _playerGun.CheckForInteracables();
     }
     
     private void HandleGravity()
