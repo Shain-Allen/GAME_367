@@ -4,31 +4,34 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private CharacterController _characterController;
-    [SerializeField] private Transform _cam;
+    private PlayerGun _playerGun;
     
+    [Header("Player movement Variables")]
     [SerializeField] private float _movementSpeed = 5f;
     [SerializeField] private float _maxJumpHeight = 1.0f;
     [SerializeField] private float _maxJumpTime = 0.5f;
+    [SerializeField] private float _fallSpeedMultiplyer = 2f;
+    private float InitialJumpVelocity { get; set; }
+    private bool IsJumping = false;
+    private Vector3 _currentMovement;
+    private Vector3 _appliedMovement;
+    
+    [Header("Player Camera variables")]
+    [SerializeField] private Transform _cam;
     [SerializeField] private float minVerticalAngle = -90f;
     [SerializeField] private float maxVerticalAngle = 90f;
+    private float _rotY = 0;
     
-    private Vector3 _movementInput;
-
-    [SerializeField] private float _shootDistance = 5f;
+    
     
     // gravity variables
-    [SerializeField] private float _gravity = -9.8f;
-    [SerializeField] private float _groundedGravity = -0.05f;
-
-    private float rotY = 0;
-    
-    // Jumping Variables
-    private float InitialJumpVelocity { get; set; }
-    public bool IsJumping = false;
+    private float _gravity = -9.8f;
+    private float _groundedGravity = -0.05f;
     
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
+        _playerGun = GetComponentInChildren<PlayerGun>();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -49,20 +52,33 @@ public class PlayerController : MonoBehaviour
     {
         HandleMovement();
         HandleCamera();
-        HandleRaycast();
         HandleGravity();
         HandleJump();
+
+        if(!_playerGun) return;
+        _playerGun.HandleRaycast();
     }
     
     private void HandleGravity()
     {
+        float previousYVelocity = _currentMovement.y;
+        
+        bool isFalling = !_characterController.isGrounded && _currentMovement.y <= 0f;
+        
         if (_characterController.isGrounded)
         {
-            _movementInput.y += _groundedGravity;
+            _currentMovement.y = _groundedGravity;
+            _appliedMovement.y = _groundedGravity;
+        }
+        else if (isFalling)
+        {
+            _currentMovement.y += _gravity * _fallSpeedMultiplyer * Time.deltaTime;
+            _appliedMovement.y = (previousYVelocity + _currentMovement.y) * 0.5f;
         }
         else
         {
-            _movementInput.y += _gravity * Time.deltaTime;
+            _currentMovement.y += _gravity * Time.deltaTime;
+            _appliedMovement.y = (previousYVelocity + _currentMovement.y) * .5f;
         }
     }
     
@@ -71,24 +87,28 @@ public class PlayerController : MonoBehaviour
         if (_characterController.isGrounded)
         {
             IsJumping = false;
-            _movementInput.y = 0;
+            _currentMovement.y = 0;
         }
         
         if (Input.GetAxis("Jump") == 0 || IsJumping) return;
         
         IsJumping = true;
-        _movementInput.y += InitialJumpVelocity;
+        _currentMovement.y += InitialJumpVelocity;
+        _appliedMovement.y += InitialJumpVelocity;
     }
 
     private void HandleMovement()
     {
-        Vector3 rawMovementInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
+        Vector3 rawMovementInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
         rawMovementInput = transform.TransformDirection(rawMovementInput) * _movementSpeed;
         
-        _movementInput.x = rawMovementInput.x;
-        _movementInput.z = rawMovementInput.z;
+        _currentMovement.x = rawMovementInput.x;
+        _currentMovement.z = rawMovementInput.z;
+
+        _appliedMovement.x = _currentMovement.x;
+        _appliedMovement.z = _currentMovement.z;
         
-        _characterController.Move(_movementInput *  Time.deltaTime);
+        _characterController.Move(_appliedMovement *  Time.deltaTime);
     }
     
     private void HandleCamera()
@@ -96,24 +116,15 @@ public class PlayerController : MonoBehaviour
         //Get mouse input
         Vector2 mouseInput = new Vector2(Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y"));
 
-        rotY += mouseInput.y;
-        rotY = Mathf.Clamp(rotY, minVerticalAngle, maxVerticalAngle);
+        _rotY += mouseInput.y;
+        _rotY = Mathf.Clamp(_rotY, minVerticalAngle, maxVerticalAngle);
         
         //rotate Player body for left right looking
         transform.Rotate(Vector3.up ,mouseInput.x);
         
         //rotate camera for up/down looking
-        _cam.transform.localRotation = Quaternion.Euler(rotY, 0f, 0f);
+        _cam.transform.localRotation = Quaternion.Euler(_rotY, 0f, 0f);
     }
     
-    private void HandleRaycast()
-    {
-        if (!Input.GetButton("Fire1")) return;
-        
-        if (!Physics.Raycast(_cam.transform.position, transform.forward, out RaycastHit hit, _shootDistance)) return;
-        
-        if (!hit.transform.TryGetComponent(out IShootable hitObject)) return;
-        
-        hitObject.Shot();
-    }
+    
 }
