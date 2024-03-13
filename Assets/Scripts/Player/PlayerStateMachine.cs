@@ -1,8 +1,10 @@
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerController : MonoBehaviour
+public class PlayerStateMachine : MonoBehaviour  
 {
+    [Header("Player references")]
+    private InputActions _inputActions;
     private CharacterController _characterController;
     private PlayerGun _playerGun;
     
@@ -21,8 +23,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float minVerticalAngle = -90f;
     [SerializeField] private float maxVerticalAngle = 90f;
     private float _rotY = 0;
-    
-    
     
     // gravity variables
     private float _gravity = -9.8f;
