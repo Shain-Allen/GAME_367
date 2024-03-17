@@ -4,7 +4,6 @@ using UnityEngine;
 public class PlayerStateMachine : MonoBehaviour  
 {
     [Header("Player references")]
-    private InputActions _inputActions;
     private CharacterController _characterController;
     private PlayerGun _playerGun;
     
