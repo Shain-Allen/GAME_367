@@ -2,9 +2,12 @@ using System;
 
 public class DroneCoverState : BaseState
 {
+    private readonly DroneStateMachine _droneCtx;
+    
     public DroneCoverState(StateMachine currentContext, StateFactory stateFactory) : base(currentContext, stateFactory)
     {
         _isRootState = true;
+        _droneCtx = (DroneStateMachine)currentContext;
     }
 
     public override void EnterState()

@@ -17,7 +17,7 @@ public class LaserEmitter : MonoBehaviour, IShootable
         _laserEmitterRenderer.material.color = damageColor;
     }
 
-    public void Shot()
+    public void Shot(float damage)
     {
         _laserWallTrap.LaserEmitterShot();
     }

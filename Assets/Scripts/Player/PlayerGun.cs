@@ -8,6 +8,7 @@ public class PlayerGun : MonoBehaviour
     [SerializeField] private float _interactDistance;
 
     [SerializeField] private PlayerAmmo _playerAmmo;
+    [SerializeField] private float _damage;
 
     private void Awake()
     {
@@ -34,7 +35,7 @@ public class PlayerGun : MonoBehaviour
         //check if what was hit is a Shootable object
         if (hit.transform.TryGetComponent(out IShootable hitObject))
         {
-            hitObject.Shot();
+            hitObject.Shot(_damage);
         }
     }
 

@@ -16,7 +16,7 @@ public class SphereColor : MonoBehaviour, IShootable
         _renderer.material.color = _defaultColor;
     }
 
-    public void Shot()
+    public void Shot(float damage)
     {
         _renderer.material.color = _shotColor;
         StartCoroutine(ResetColor());

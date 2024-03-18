@@ -1,5 +1,5 @@
 // Interface for all things that can be shot
 public interface IShootable
 {
-    void Shot();
+    void Shot(float damage);
 }

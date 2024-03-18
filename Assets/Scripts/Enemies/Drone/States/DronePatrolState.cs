@@ -2,7 +2,7 @@ using System;
 
 public class DronePatrolState : BaseState
 {
-    private new readonly DroneStateMachine _droneCtx;
+    private readonly DroneStateMachine _droneCtx;
     
     public DronePatrolState(StateMachine currentContext, StateFactory stateFactory) : base(currentContext, stateFactory)
     {
@@ -16,26 +16,35 @@ public class DronePatrolState : BaseState
         
         //Set a random patrol point
         int randomPatrolPoint = UnityEngine.Random.Range(0, _droneCtx._patrolPoints.Count);
-        _droneCtx.SetDroneDestination(_droneCtx._patrolPoints[randomPatrolPoint].position);
+        _droneCtx._navMeshAgent.SetDestination(_droneCtx._patrolPoints[randomPatrolPoint].position);
     }
 
     protected override void UpdateState()
     {
+        CheckSwitchStates();
         
+        //Once the drone has reached the current destination point, set the next destination point to a random patrol point
+        if (!(_droneCtx._navMeshAgent.remainingDistance <= _droneCtx._navMeshAgent.stoppingDistance)) return;
+        
+        int randomPatrolPoint = UnityEngine.Random.Range(0, _droneCtx._patrolPoints.Count);
+        _droneCtx._navMeshAgent.SetDestination(_droneCtx._patrolPoints[randomPatrolPoint].position);
     }
 
     public override void ExitState()
     {
-        throw new NotImplementedException();
+        
     }
 
     protected override void CheckSwitchStates()
     {
-        throw new NotImplementedException();
+        if (_droneCtx._playerNavMeshHit.distance <= _droneCtx._provocationRange)
+        {
+            SwitchState(_factory.GetState<DroneAttackState>());
+        }
     }
 
     public override void InitializeSubState()
     {
-        throw new NotImplementedException();
+        
     }
 }
