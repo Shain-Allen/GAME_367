@@ -5,8 +5,8 @@ using UnityEngine.AI;
 
 public class DroneStateMachine : StateMachine
 {
-    public NavMeshAgent _navMeshAgent;
-    public DroneGun _droneGun;
+    [HideInInspector] public NavMeshAgent _navMeshAgent;
+    [HideInInspector] public DroneGun _droneGun;
     
     [Header("patrol Points")]
     public List<Transform> _patrolPoints;
@@ -43,7 +43,6 @@ public class DroneStateMachine : StateMachine
     private void Update()
     {
         CurrentState.UpdateStates();
-
         _navMeshAgent.Raycast(GameManager.Player.transform.position, out _playerNavMeshHit);
     }
 }
