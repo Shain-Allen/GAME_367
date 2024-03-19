@@ -26,6 +26,7 @@ public class DroneStateMachine : StateMachine
 
     private void Awake()
     {
+        _states = new StateFactory(this);
         _navMeshAgent = gameObject.GetComponent<NavMeshAgent>();
         _droneGun = gameObject.GetComponent<DroneGun>();
         _navMeshAgent.speed = _speed;
