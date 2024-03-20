@@ -35,6 +35,11 @@ public class DroneStateMachine : StateMachine
         _navMeshAgent.angularSpeed = _turnSpeed;
         _navMeshAgent.acceleration = _acceleration;
         _navMeshAgent.stoppingDistance = _miniumAttackrange;
+
+        foreach (EnemyPatrolPoint patrolPoint in FindObjectsByType<EnemyPatrolPoint>(UnityEngine.FindObjectsSortMode.None))
+        {
+            _patrolPoints.Add(patrolPoint.transform);
+        }
     }
 
     private void Start()

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
@@ -7,7 +8,11 @@ public class EnemyBullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (! other.gameObject.TryGetComponent(out PlayerHealth playerHealth)) return;
+        if (!other.gameObject.TryGetComponent(out PlayerHealth playerHealth))
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         playerHealth.TakeDamage(Damage);
         

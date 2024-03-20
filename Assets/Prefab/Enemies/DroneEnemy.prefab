@@ -791,11 +791,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 0}
   _droneGun: {fileID: 0}
-  _patrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _patrolPoints: []
   _speed: 2
   _turnSpeed: 120
   _acceleration: 8

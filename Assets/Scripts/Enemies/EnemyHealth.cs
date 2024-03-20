@@ -48,6 +48,7 @@ public class EnemyHealth : MonoBehaviour, IShootable
         CurrentHealth -= damage;
         if (CurrentHealth <= 0)
         {
+            EnemySpawner.Instance.DefeatedEnemy(gameObject);
             Destroy(gameObject);
         }
         
