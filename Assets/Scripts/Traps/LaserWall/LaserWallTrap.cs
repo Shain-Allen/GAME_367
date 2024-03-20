@@ -2,11 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class LaserWallTrap : MonoBehaviour
 {
-    [SerializeField] private float _lasweWallUpTime;
+    [Header("Wall Timer Params")]
+    [SerializeField] private bool _laserTimerOn;
+    [SerializeField] private float _laserWallUpTime;
     [SerializeField] private float _laserWallDownTime;
+    [SerializeField] private float _minVariance;
+    [SerializeField] private float _maxVariance;
+    private Coroutine _laserGateTimer;
+    
+    [Header("Wall Damage Params")]
     [SerializeField] private float _laserWallFixTime;
     [SerializeField, Min(0)] private int _damageLevels = 2;
     private int _currentDamageLevel = 0;
@@ -26,6 +35,8 @@ public class LaserWallTrap : MonoBehaviour
         _damageColors ??= new List<Color>() { Color.blue };
         
         DamageLevelChanged?.Invoke(_damageColors[0]);
+        
+        _laserGateTimer = StartCoroutine(GateTimer());
     }
 
     private void  WallLaserEmitterShot()
@@ -43,6 +54,11 @@ public class LaserWallTrap : MonoBehaviour
 
     private IEnumerator FixGate()
     {
+        if (_laserGateTimer != null)
+        {
+            StopCoroutine(_laserGateTimer);
+        }
+        
         _laserGate.SetActive(false);
 
         while (_currentDamageLevel != 0)
@@ -55,5 +71,19 @@ public class LaserWallTrap : MonoBehaviour
         _currentDamageLevel = 0;
         DamageLevelChanged?.Invoke(_damageColors[_currentDamageLevel]);
         _laserGate.SetActive(true);
+        
+        _laserGateTimer = StartCoroutine(GateTimer());
+    }
+    
+    private IEnumerator GateTimer()
+    {
+        while (_laserTimerOn)
+        {
+            _laserGate.SetActive(true);
+            yield return new WaitForSeconds(_laserWallUpTime + Random.Range(_minVariance, _maxVariance));
+            _laserGate.SetActive(false);
+            yield return new WaitForSeconds(_laserWallDownTime + Random.Range(_minVariance, _maxVariance));
+            _laserGate.SetActive(true);
+        }
     }
 }

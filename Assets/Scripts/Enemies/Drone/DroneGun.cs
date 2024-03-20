@@ -14,7 +14,8 @@ public class DroneGun : MonoBehaviour
     public void Shoot()
     {
         if (!_canShoot) return;
-        
+
+        StartCoroutine(ShootCooldown());
         GameObject bullet = Instantiate(_bulletPrefab, _bulletSpawnPoint.position, quaternion.identity);
         bullet.GetComponent<Rigidbody>().AddForce(_bulletSpawnPoint.forward * _bulletForce, ForceMode.Impulse);
         bullet.GetComponent<EnemyBullet>().Damage = _bulletDamage;

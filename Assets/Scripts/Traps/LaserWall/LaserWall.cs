@@ -9,6 +9,8 @@ public class LaserWall : MonoBehaviour
     private bool _playerInWall = false;
 
     private Coroutine _dealDamageRef;
+
+    
     
     private void OnTriggerEnter(Collider other)
     {
@@ -40,4 +42,6 @@ public class LaserWall : MonoBehaviour
         
         StopCoroutine(_dealDamageRef);
     }
+    
+    
 }

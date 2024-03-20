@@ -114,8 +114,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f3854e2bc94fd4b933b311c1692419, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lasweWallUpTime: 5
-  _laserWallDownTime: 2.5
+  _laserTimerOn: 0
+  _laserWallUpTime: 4
+  _laserWallDownTime: 5
+  _minVariance: 0
+  _maxVariance: 3
   _laserWallFixTime: 8
   _damageLevels: 2
   _damageColors:
@@ -419,6 +422,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LaserWall
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d0517367aa818b2409e4554b3817c1be, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -426,6 +433,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d0517367aa818b2409e4554b3817c1be, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7653544325667980846}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d0517367aa818b2409e4554b3817c1be, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2342081518495306093}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d0517367aa818b2409e4554b3817c1be, type: 3}
       insertIndex: -1
       addedObject: {fileID: 286945588711902171}
@@ -463,6 +473,27 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.43607673, y: 2, z: 2.0000005}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &2342081518495306093
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7506408612809989813}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.12, y: 2, z: 2.15}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &286945588711902171
 MonoBehaviour:
