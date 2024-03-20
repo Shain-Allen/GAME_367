@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,13 +16,12 @@ public class EnemyHealth : MonoBehaviour, IShootable
     
     [SerializeField] private Slider _healthBar;
 
-    private void Awake()
+    private void Start()
     {
         CurrentHealth = _maxHealth;
-        _healthBar.maxValue = _maxHealth;
         _healthBar.value = (float)CurrentHealth/_maxHealth;
     }
-    
+
     public void RecoverHealth(int health)
     {
         CurrentHealth += health;

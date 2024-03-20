@@ -17,6 +17,8 @@ public class DroneStateMachine : StateMachine
     [SerializeField] private float _acceleration;
     [SerializeField] private LayerMask _obstaclesLayerMask;
     public NavMeshHit _playerNavMeshHit;
+    public RaycastHit _playerRaycastHit;
+    public bool _isPlayerVisible;
     
     [Header("Enemy Attack Parameters")]
     public float _miniumAttackrange;
@@ -44,6 +46,22 @@ public class DroneStateMachine : StateMachine
     private void Update()
     {
         CurrentState.UpdateStates();
+
+        // do a Physics raycast from the enemy in the direction of the player to check if the player is visible to the enemy
+        Vector3 direction = GameManager.Player.transform.position - transform.position;
+        if (Physics.Raycast(transform.position, direction.normalized, out _playerRaycastHit))
+        {
+            _isPlayerVisible = _playerRaycastHit.transform == GameManager.Player.transform;
+        }
+        
         _navMeshAgent.Raycast(GameManager.Player.transform.position, out _playerNavMeshHit);
+        
+    }
+
+    private void OnDrawGizmos()
+    {
+        Vector3 direction = GameManager.Player.transform.position - transform.position;
+        
+        Gizmos.DrawLine(transform.position, transform.position + direction.normalized * _provocationRange);
     }
 }

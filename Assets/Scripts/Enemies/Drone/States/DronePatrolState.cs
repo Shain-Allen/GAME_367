@@ -37,7 +37,7 @@ public class DronePatrolState : BaseState
 
     protected override void CheckSwitchStates()
     {
-        if (_droneCtx._playerNavMeshHit.distance <= _droneCtx._provocationRange)
+        if (_droneCtx._isPlayerVisible &&  _droneCtx._playerNavMeshHit.distance <= _droneCtx._provocationRange)
         {
             SwitchState(_factory.GetState<DroneAttackState>());
         }

@@ -3149,6 +3149,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5723539631110066534, guid: 98c1e6046fb710a4480215b473979dfe, type: 3}
+      propertyPath: _damage
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6130343823565565912, guid: 98c1e6046fb710a4480215b473979dfe, type: 3}
       propertyPath: _maxHealth
       value: 30
@@ -6252,6 +6256,10 @@ PrefabInstance:
       objectReference: {fileID: 323461293}
     - target: {fileID: 7291962024414663156, guid: 09273334a36d58e47ac9453cd6db0519, type: 3}
       propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7291962024414663156, guid: 09273334a36d58e47ac9453cd6db0519, type: 3}
+      propertyPath: m_MaxValue
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7291962024414663156, guid: 09273334a36d58e47ac9453cd6db0519, type: 3}

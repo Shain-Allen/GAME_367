@@ -535,7 +535,6 @@ GameObject:
   - component: {fileID: 5839198538498225177}
   - component: {fileID: 4108922537453391165}
   - component: {fileID: 545101441420451912}
-  - component: {fileID: 7053510206719368013}
   - component: {fileID: 8123611506563123936}
   - component: {fileID: 2644722543584335116}
   m_Layer: 0
@@ -610,29 +609,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &7053510206719368013
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7871730893331036832}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8123611506563123936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -753,6 +729,7 @@ GameObject:
   - component: {fileID: 6177412027229807637}
   - component: {fileID: 7597390533550351198}
   - component: {fileID: 398716842154227954}
+  - component: {fileID: 8711268479712201146}
   m_Layer: 0
   m_Name: DroneEnemy
   m_TagString: Untagged
@@ -825,6 +802,7 @@ MonoBehaviour:
   _obstaclesLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  _isPlayerVisible: 0
   _miniumAttackrange: 1
   _maximumAttackrange: 8
   _provocationRange: 5
@@ -862,3 +840,26 @@ MonoBehaviour:
   _bulletForce: 0
   _bulletDamage: 0
   _bulletPrefab: {fileID: 6943448194675357530, guid: 455175d4bc2ac92489d0003472fd2c5f, type: 3}
+--- !u!136 &8711268479712201146
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9167106669537552157}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
